@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/express.js",
+    "start": "node build/express.js",
     "dev": "node node_modules/gulp/bin/gulp.js",
     "build": "npm run build-server && npm run build-client",
     "build-client": "webpack --progress --colors",
-    "build-server": "babel server/ -d dist/ --copy-files",
+    "build-server": "babel server/ -d build/ --copy-files",
     "build-min": "node ./node_modules/.bin/webpack --progress --colors --optimize-minimize",
-    "build-docker": "docker run --rm -v $(pwd):/usr/src/app -w /usr/src/app mhart/alpine-node:latest npm run prep-docker && docker build -t app .",
+    "build-docker": "docker run --dns 8.8.8.8 --rm -v $(pwd):/usr/src/app -w /usr/src/app mhart/alpine-node:latest npm run prep-docker && docker build -t app .",
     "prep-docker": "npm install && npm run build && npm prune --production",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "echo \"Error: no deploy specified\" && exit 1"
