@@ -4,16 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build && node node_modules/gulp/bin/gulp.js express",
+    "start": "node dist/express.js",
     "dev": "node node_modules/gulp/bin/gulp.js",
-    "build": "node ./node_modules/.bin/webpack --progress --colors",
+    "build": "npm run build-server && npm run build-client",
+    "build-client": "webpack --progress --colors",
+    "build-server": "babel server/ -d dist/ --copy-files",
     "build-min": "node ./node_modules/.bin/webpack --progress --colors --optimize-minimize",
+    "build-docker": "docker run --rm -v $(pwd):/usr/src/app -w /usr/src/app mhart/alpine-node:latest npm run prep-docker && docker build -t app .",
+    "prep-docker": "npm install && npm run build && npm prune --production",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "echo \"Error: no deploy specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.1.2",
     "express": "^4.14.0",
     "font-awesome": "^4.6.3",
     "immutable": "^3.8.1",
@@ -26,7 +31,7 @@
     "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
-    "async": "^2.1.2",
+    "babel-cli": "^6.18.0",
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-add-module-exports": "^0.2.1",

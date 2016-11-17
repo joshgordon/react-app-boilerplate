@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import { resolve } from 'path';
 import express, { static as _static } from 'express';
 
